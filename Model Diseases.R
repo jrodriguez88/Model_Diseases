@@ -11,9 +11,9 @@ rm(list = ls())
 
 t <- c(21,33,36,40,43)
 i <- c(29,59,80,91,96)
-nut <- cbind(t,i)
-data <- nut
+data <- cbind(t,i)
 y <- data[,2]/100                  # Convierte incidencia(%) a fraccion-y-: incidencia/100
+y0 <- 0.05                         # Opcional, definir incidencia inicial (y0) para intercomparar modelos
 
 #Cada Modelo tiene su propia ecuacion y requiere transformarse a su forma lineal
 
@@ -54,7 +54,7 @@ yl<-rlogi[[1]][[1]]
 yg<-rgomp[[1]][[1]] 
 yw<-rweib[[1]][[1]]
 
-#Calculo de estadisticos R² y Residuales
+#Calculo de estadisticos R? y Residuales
 r1<- summary(lm(mono~t))$r.squared
 r2<- summary(lm(expo~t))$r.squared
 r3<- summary(lm(logi~t))$r.squared
@@ -181,12 +181,12 @@ plotweib <- function(a,b,c,maxt){
 par(oma=c(0,0,2,0), mfrow=c(2,3))
 plot(t,y, xlab = "Tiempo(dias)", ylab = "Incidencia", main = "Incidencia Observada") 
 lines(t,y, col="red")
-plotexp(0.05, re, ciclo)
-plotmono(0.05, rm, ciclo)
-plotlog(0.05, rl, ciclo)
-plotgomp(0.05,rg, ciclo)
+plotexp(y0, re, ciclo)
+plotmono(y0, rm, ciclo)
+plotlog(y0, rl, ciclo)
+plotgomp(y0,rg, ciclo)
 plotweib(1, 1/rw, 1, ciclo)
-mtext("Modelos de Progreso de la Epidemia, y0=5%", outer = TRUE, cex = 1.5)
+mtext(paste0("Modelos de Progreso de la Epidemia, y0=", y0*100, "%"), outer = TRUE, cex = 1.5)
 
 
 #Grafico con Incidencia Inicial derivada de Regresion Lineal= Intercepto
